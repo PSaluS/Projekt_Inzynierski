@@ -1,6 +1,7 @@
 var scena = new THREE.Scene();
 var kamera = new THREE.PerspectiveCamera(
   45,
+  // window.innerWidth / window.innerHeight,
   document.getElementById("chart").offsetWidth /
     document.getElementById("chart").offsetHeight,
   0.1,
@@ -8,24 +9,38 @@ var kamera = new THREE.PerspectiveCamera(
 );
 
 var renderer = new THREE.WebGLRenderer();
+// var controls = new THREE.OrbitControls(kamera, renderer.domElement);
+// var controls;
 
 function init() {
   kamera.position.z = 6.5;
+  // console.log(document.getElementById("chart").offsetWidth);
+  // console.log(document.getElementById("chart").offsetHeight);
+  // console.log(document.getElementById("data").offsetWidth);
   renderer.setSize(
     document.getElementById("chart").offsetWidth * 0.996,
     document.getElementById("chart").offsetHeight * 0.996
   );
+  // renderer.setSize(1198, 536);
   renderer.setClearColor(0xc0c0c0, 1);
   document.getElementById("chart").appendChild(renderer.domElement);
+  // if(controls != undefined) {
+  //   controls = undefined;
+  //   console.log("czyszczenie controls : "+controls);
+  // }
 
   var controls = new THREE.OrbitControls(kamera, renderer.domElement);
 
-  controls.enableDamping = true;
+  controls.enableDamping = true; // an animation loop is required when either damping or auto-rotation are enabled
   controls.dampingFactor = 0.05;
   controls.screenSpacePanning = false;
+  //controls.minDistance = 100;
   controls.maxDistance = 500;
   controls.maxPolarAngle = Math.PI / 2;
 }
+
+// var butt = document.getElementById("data_button");
+//var rand_butt = document.getElementById("random_button");
 var xmlLoad = document.getElementById("xmlload");
 var char_type = 1;
 var char_color = 1;
@@ -37,6 +52,26 @@ var Boxs = [];
 var X = [];
 var Y = [];
 var Z = [];
+// var colorTab1 = [
+//   "0xff0000",
+//   "0x00ff00",
+//   "0x0000ff",
+//   "0xff00ff",
+//   "0x007777",
+//   "0x770077",
+//   "0x777700",
+//   "0x00ffff"
+// ];
+// var colorTab2 = [
+//   "0xff0000",
+//   "0xff8800",
+//   "0xe5ff00",
+//   "0x51ff00",
+//   "0x007710",
+//   "0x00ffdd",
+//   "0x0026ff",
+//   "0x7700ff"
+// ];
 var trash;
 
 menuActiv();
@@ -56,7 +91,10 @@ var render = function() {
 
 function animate() {
   requestAnimationFrame(animate);
+  // try{
   controls.update();
+  // }
+  // catch(err){}
   render();
 }
 
@@ -78,6 +116,37 @@ function stringToXML(text) {
     return null;
   } catch (e) {}
 }
+
+function getRandom() {
+  return Math.round((Math.random() * 10 + 0.01) * 100) / 100;
+}
+
+/*rand_butt.onclick = function () {
+
+        document.getElementById('x0').value = getRandom();
+        document.getElementById('y0').value = getRandom();
+
+        document.getElementById('x1').value = getRandom();
+        document.getElementById('y1').value = getRandom();
+
+        document.getElementById('x2').value = getRandom();
+        document.getElementById('y2').value = getRandom();
+
+        document.getElementById('x3').value = getRandom();
+        document.getElementById('y3').value = getRandom();
+
+        document.getElementById('x4').value = getRandom();
+        document.getElementById('y4').value = getRandom();
+
+        document.getElementById('x5').value = getRandom();
+        document.getElementById('y5').value = getRandom();
+
+        document.getElementById('x6').value = getRandom();
+        document.getElementById('y6').value = getRandom();
+
+        document.getElementById('x7').value = getRandom();
+        document.getElementById('y7').value = getRandom();
+    }*/
 
 setDataTable = function(new_data) {
   document.getElementById("data").innerHTML = new_data;
@@ -123,11 +192,17 @@ charFromCHange = function() {
   document.getElementById("add_slot").onclick = addSlot;
 };
 
+// document.onchange = function() {
+//   //document.getElementById("dota_button").addEventListener("click", buttClick());
+//   document.getElementById("data_button").onclick = buttClick();
+// };
+
 xmlLoad.onchange = function() {
   var uploader = this;
   var reader = new FileReader();
   reader.readAsText(uploader.files[0], "UTF-8");
   reader.onprogress = function(evt) {
+    // console.log("Postęp wczytywania", evt);
   };
   reader.onload = function(evt) {
     var xml_data = stringToXML(reader.result);
@@ -137,6 +212,8 @@ xmlLoad.onchange = function() {
     console.log(char_form);
 
     charFromCHange();
+    //document.getElementById("dota_button").onclick = buttClick();
+    //console.log(dl);
 
     for (var i = 0; i < dl; i++) {
       document.getElementById(`x${i}`).value =
@@ -167,8 +244,12 @@ xmlLoad.onchange = function() {
 };
 
 function buttClick() {
+  // for (var i = 0; i < dates.length; i++) {
+  //   trash = dates.splice(i, dates.length);
+  // }
   init();
   clearTable(dates);
+  //console.log(dates);
   for (var i = 0; i < dl; i++) {
     if (char_type == 1)
       dates.push(Math.abs(document.getElementById(`x${i}`).value));
@@ -185,10 +266,61 @@ function buttClick() {
       else dates.push(document.getElementById(`z${i}`).value);
     }
   }
+  // console.log("Dates : \n" + dates);
   var max_X = 0;
   var max_Y = 0;
   var max_Z = 0;
 
+  // if (char_type == 1 && char_form == 1 && dates.length > 8) {
+  //   let buffx = 0;
+  //   for (var i = 8; i < dates.length; i++) {
+  //     buffx += dates.pop();
+  //   }
+  //   dates[7] += buffx;
+  // }
+
+  // if (char_type == 2 && char_form == 1 && dates.length > 16) {
+  //   let buffx,
+  //     buffy = 0;
+  //   for (var i = 16; i < dates.length; i++) {
+  //     buffy += dates.pop();
+  //     buffx += dates.pop();
+  //   }
+  //   dates[15] += buffy;
+  //   dates[14] += buffx;
+  // }
+
+  // if (char_type == 3 && char_form == 1 && dates.length > 24) {
+  //   let buffx,
+  //     buffy,
+  //     buffz = 0;
+  //   for (var i = 24; i < dates.length; i++) {
+  //     buffz += dates.pop();
+  //     buffy += dates.pop();
+  //     buffx += dates.pop();
+  //   }
+  //   dates[23] += buffz;
+  //   dates[22] += buffy;
+  //   dates[21] += buffx;
+  // }
+
+  // if (max_X < dates[0]) max_X = dates[0];
+  // if (max_X < dates[2]) max_X = dates[2];
+  // if (max_X < dates[4]) max_X = dates[4];
+  // if (max_X < dates[6]) max_X = dates[6];
+  // if (max_X < dates[8]) max_X = dates[8];
+  // if (max_X < dates[10]) max_X = dates[10];
+  // if (max_X < dates[12]) max_X = dates[12];
+  // if (max_X < dates[14]) max_X = dates[14];
+
+  // if (max_Y < dates[1]) max_Y = dates[1];
+  // if (max_Y < dates[3]) max_Y = dates[3];
+  // if (max_Y < dates[5]) max_Y = dates[5];
+  // if (max_Y < dates[7]) max_Y = dates[7];
+  // if (max_Y < dates[9]) max_Y = dates[9];
+  // if (max_Y < dates[11]) max_Y = dates[11];
+  // if (max_Y < dates[13]) max_Y = dates[13];
+  // if (max_Y < dates[15]) max_Y = dates[15];
 
   for (var i = 0; i < dates.length; i++) {
     if (char_type == 1) {
@@ -216,6 +348,10 @@ function buttClick() {
     }
   }
 
+  // console.log("max_X : \n" + max_X);
+  // console.log("max_Y : \n" + max_Y);
+  // console.log("max_Z : \n" + max_Z);
+
   if (char_type == 1) {
     if (char_form == 1) var mux_X = 5 / max_X;
     if (char_form >= 2) {
@@ -233,7 +369,35 @@ function buttClick() {
     var mux2 = mux_X;
     if (mux_Y < mux2) mux2 = mux_Y;
     if (mux_Z < mux2) mux2 = mux_Z;
+
+    // console.log("mux2 = " + mux2);
   }
+
+  // console.log("mux_X : \n" + mux_X);
+  // console.log("mux_Y : \n" + mux_Y);
+  // console.log("mux_Z : \n" + mux_Z);
+
+  // var height = [
+  //   dates[1] * mux_Y,
+  //   dates[3] * mux_Y,
+  //   dates[5] * mux_Y,
+  //   dates[7] * mux_Y,
+  //   dates[9] * mux_Y,
+  //   dates[11] * mux_Y,
+  //   dates[13] * mux_Y,
+  //   dates[15] * mux_Y
+  // ];
+
+  // var weight = [
+  //   dates[0] * mux_X,
+  //   dates[2] * mux_X,
+  //   dates[4] * mux_X,
+  //   dates[6] * mux_X,
+  //   dates[8] * mux_X,
+  //   dates[10] * mux_X,
+  //   dates[12] * mux_X,
+  //   dates[14] * mux_X
+  // ];
 
   clearTable(X);
   clearTable(Y);
@@ -253,6 +417,10 @@ function buttClick() {
       if (char_type == 2) Z.push(dates[i] * mux2);
     }
   }
+
+  // console.log("X : \n" + X);
+  // console.log("Y : \n" + Y);
+  // console.log("Z : \n" + Z);
 
   while (scena.children.length > 0) {
     scena.remove(scena.children[0]);
@@ -274,6 +442,9 @@ function buttClick() {
       podloga.position.x += dl - 8;
       sciana.position.x += dl - 8;
     }
+    // podloga.position.x +=  2;
+    // sciana.rotation.x = -Math.PI / 2;
+    // sciana.rotation.z = -Math.PI / 2;
     podloga.position.y -= 4;
     sciana.position.y -= 1.5;
     sciana.position.z -= 1.5;
@@ -360,6 +531,7 @@ function buttClick() {
       }
     }
   }
+  // var geometriaPlaszczyzny = new THREE.PlaneGeometry(18, 3);
 
   kamera.rotation.x = -Math.PI / 6;
   kamera.position.set(0, 4, 11);
@@ -368,6 +540,14 @@ function buttClick() {
   render();
 
   if (char_type == 1) {
+    // var geometriaBox0 = new THREE.BoxGeometry(weight[0], height[0], weight[0]);
+    // var geometriaBox1 = new THREE.BoxGeometry(weight[1], height[1], weight[1]);
+    // var geometriaBox2 = new THREE.BoxGeometry(weight[2], height[2], weight[2]);
+    // var geometriaBox3 = new THREE.BoxGeometry(weight[3], height[3], weight[3]);
+    // var geometriaBox4 = new THREE.BoxGeometry(weight[4], height[4], weight[4]);
+    // var geometriaBox5 = new THREE.BoxGeometry(weight[5], height[5], weight[5]);
+    // var geometriaBox6 = new THREE.BoxGeometry(weight[6], height[6], weight[6]);
+    // var geometriaBox7 = new THREE.BoxGeometry(weight[7], height[7], weight[7]);
 
     clearTable(geometriaBox);
     for (var i = 0; i < X.length; i++) {
@@ -381,15 +561,33 @@ function buttClick() {
   }
 
   if (char_type == 2) {
+    // var geometriaBox0 = new THREE.SphereGeometry(0.1, 32, 32);
+    // var geometriaBox1 = new THREE.SphereGeometry(0.1, 32, 32);
+    // var geometriaBox2 = new THREE.SphereGeometry(0.1, 32, 32);
+    // var geometriaBox3 = new THREE.SphereGeometry(0.1, 32, 32);
+    // var geometriaBox4 = new THREE.SphereGeometry(0.1, 32, 32);
+    // var geometriaBox5 = new THREE.SphereGeometry(0.1, 32, 32);
+    // var geometriaBox6 = new THREE.SphereGeometry(0.1, 32, 32);
+    // var geometriaBox7 = new THREE.SphereGeometry(0.1, 32, 32);
 
     clearTable(geometriaBox);
     for (var i = 0; i < X.length; i++)
       geometriaBox[i] = new THREE.SphereGeometry(0.1, 32, 32);
   }
 
+  // console.log("Geometria : \n" + geometriaBox);
+
   var ic = 0;
 
   if (char_color == 1) {
+    // var BoxMaterial0 = new THREE.MeshPhongMaterial({ color: 0xff0000 });
+    // var BoxMaterial1 = new THREE.MeshPhongMaterial({ color: 0x00ff00 });
+    // var BoxMaterial2 = new THREE.MeshPhongMaterial({ color: 0x0000ff });
+    // var BoxMaterial3 = new THREE.MeshPhongMaterial({ color: 0xff00ff });
+    // var BoxMaterial4 = new THREE.MeshPhongMaterial({ color: 0x007777 });
+    // var BoxMaterial5 = new THREE.MeshPhongMaterial({ color: 0x770077 });
+    // var BoxMaterial6 = new THREE.MeshPhongMaterial({ color: 0x777700 });
+    // var BoxMaterial7 = new THREE.MeshPhongMaterial({ color: 0x00ffff });
 
     clearTable(BoxMaterial);
     for (var i = 0; i < 8; i++)
@@ -431,6 +629,14 @@ function buttClick() {
   }
 
   if (char_color == 2) {
+    // var BoxMaterial0 = new THREE.MeshPhongMaterial({ color: 0xff0000 });
+    // var BoxMaterial1 = new THREE.MeshPhongMaterial({ color: 0xff8800 });
+    // var BoxMaterial2 = new THREE.MeshPhongMaterial({ color: 0xe5ff00 });
+    // var BoxMaterial3 = new THREE.MeshPhongMaterial({ color: 0x51ff00 });
+    // var BoxMaterial4 = new THREE.MeshPhongMaterial({ color: 0x007710 });
+    // var BoxMaterial5 = new THREE.MeshPhongMaterial({ color: 0x00ffdd });
+    // var BoxMaterial6 = new THREE.MeshPhongMaterial({ color: 0x0026ff });
+    // var BoxMaterial7 = new THREE.MeshPhongMaterial({ color: 0x7700ff });
 
     clearTable(BoxMaterial);
     for (var i = 0; i < 8; i++)
@@ -472,11 +678,30 @@ function buttClick() {
   }
 
   if (char_color == 3) {
+    // var BoxMaterial0 = new THREE.MeshPhongMaterial({ color: 0x111111 });
+    // var BoxMaterial1 = new THREE.MeshPhongMaterial({ color: 0x111111 });
+    // var BoxMaterial2 = new THREE.MeshPhongMaterial({ color: 0x111111 });
+    // var BoxMaterial3 = new THREE.MeshPhongMaterial({ color: 0x111111 });
+    // var BoxMaterial4 = new THREE.MeshPhongMaterial({ color: 0x111111 });
+    // var BoxMaterial5 = new THREE.MeshPhongMaterial({ color: 0x111111 });
+    // var BoxMaterial6 = new THREE.MeshPhongMaterial({ color: 0x111111 });
+    // var BoxMaterial7 = new THREE.MeshPhongMaterial({ color: 0x111111 });
 
     clearTable(BoxMaterial);
     for (var i = 0; i < 8; i++)
       BoxMaterial[i] = new THREE.MeshPhongMaterial({ color: 0x111111 });
   }
+
+  // console.log("Materiały : \n" + BoxMaterial);
+
+  // var box0 = new THREE.Mesh(geometriaBox0, BoxMaterial0);
+  // var box1 = new THREE.Mesh(geometriaBox1, BoxMaterial1);
+  // var box2 = new THREE.Mesh(geometriaBox2, BoxMaterial2);
+  // var box3 = new THREE.Mesh(geometriaBox3, BoxMaterial3);
+  // var box4 = new THREE.Mesh(geometriaBox4, BoxMaterial4);
+  // var box5 = new THREE.Mesh(geometriaBox5, BoxMaterial5);
+  // var box6 = new THREE.Mesh(geometriaBox6, BoxMaterial6);
+  // var box7 = new THREE.Mesh(geometriaBox7, BoxMaterial7);
 
   clearTable(Boxs);
   var ic = 0;
@@ -486,7 +711,25 @@ function buttClick() {
     else ic++;
   }
 
+  // console.log("BoxY : \n" + Boxs);
+
   if (char_type == 1) {
+    // box0.position.x = -7;
+    // box0.position.y = -4 + height[0] / 2;
+    // box1.position.x = -5;
+    // box1.position.y = -4 + height[1] / 2;
+    // box2.position.x = -3;
+    // box2.position.y = -4 + height[2] / 2;
+    // box3.position.x = -1;
+    // box3.position.y = -4 + height[3] / 2;
+    // box4.position.x = 1;
+    // box4.position.y = -4 + height[4] / 2;
+    // box5.position.x = 3;
+    // box5.position.y = -4 + height[5] / 2;
+    // box6.position.x = 5;
+    // box6.position.y = -4 + height[6] / 2;
+    // box7.position.x = 7;
+    // box7.position.y = -4 + height[7] / 2;
     let pozx = -7;
     for (var i = 0; i < X.length; i++) {
       Boxs[i].position.x = pozx;
@@ -497,6 +740,24 @@ function buttClick() {
   }
 
   if (char_type == 2) {
+    // box0.position.x = weight[0] - 7;
+    // box0.position.y = height[0] - 4;
+    // box1.position.x = weight[1] - 7;
+    // box1.position.y = height[1] - 4;
+    // box2.position.x = weight[2] - 7;
+    // box2.position.y = height[2] - 4;
+    // box3.position.x = weight[3] - 7;
+    // box3.position.y = height[3] - 4;
+    // box4.position.x = weight[4] - 7;
+    // box4.position.y = height[4] - 4;
+    // box5.position.x = weight[5] - 7;
+    // box5.position.y = height[5] - 4;
+    // box6.position.x = weight[6] - 7;
+    // box6.position.y = height[6] - 4;
+    // box7.position.x = weight[7] - 7;
+    // box7.position.y = height[7] - 4;
+    //box0.position.x=-6;
+    //box0.position.y=-4;
 
     for (var i = 0; i < X.length; i++) {
       Boxs[i].position.x = X[i];
@@ -504,8 +765,19 @@ function buttClick() {
       if (Z[i]) Boxs[i].position.z = Z[i];
     }
   }
+  // if (dates[0] > 0 && dates[1] > 0) scena.add(box0);
+  // if (dates[2] > 0 && dates[3] > 0) scena.add(box1);
+  // if (dates[4] > 0 && dates[5] > 0) scena.add(box2);
+  // if (dates[6] > 0 && dates[7] > 0) scena.add(box3);
+  // if (dates[8] > 0 && dates[9] > 0) scena.add(box4);
+  // if (dates[10] > 0 && dates[11] > 0) scena.add(box5);
+  // if (dates[12] > 0 && dates[13] > 0) scena.add(box6);
+  // if (dates[14] > 0 && dates[15] > 0) scena.add(box7);
 
   for (var i = 0; i < X.length; i++) {
+    // console.log(Boxs[i].position.x);
+    // console.log(Boxs[i].position.y);
+    // console.log("x.length = "+X.length);
     scena.add(Boxs[i]);
   }
   animate();
@@ -574,3 +846,5 @@ document.getElementById("form3").onclick = function() {
   menuActiv();
 };
 document.getElementById("add_slot").onclick = addSlot;
+
+// export * from render.js;
