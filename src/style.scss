@@ -1,0 +1,181 @@
+$background: #5ec6e6;
+$darkblue: #000b6e;
+$lightblue: #20add8;
+$menulineblue: #0084ac;
+$menuactiv: #a6eaff;
+
+body {
+  margin: 0;
+  background-color: $background;
+}
+header {
+  font-size: 72px;
+  text-align: center;
+  color: $darkblue;
+  min-width: 895px;
+}
+#header:hover{
+  cursor: default;
+}
+footer {
+  border-style: double;
+  border-color: $darkblue;
+  height: 50px;
+  // width: 1495px;
+  width: 97.3vw;
+  text-align: center;
+  color: $darkblue;
+  font-size: 25px;
+  display: table-cell;
+  vertical-align: middle;
+  transform: translateX(0.3vw);
+}
+.all {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+.data {
+  border-style: double;
+  border-color: $darkblue;
+  margin-left: 0.3vw;
+  width: 19vw;
+  min-width: min-content;
+  overflow: auto;
+  height: 74vh;
+  max-width: 212px;
+}
+#chart {
+  border-style: double;
+  border-color: $darkblue;
+  display: block;
+  background-color: black;
+  width: 78vw;
+  height: 74vh;
+}
+main {
+  display: flex;
+  margin-top: 42px;
+}
+.data_el {
+  padding: 5px;
+  margin-left: 10px;
+  margin-right: 10px;
+  align-content: center;
+  color: $darkblue;
+}
+#data_button,
+#add_slot {
+  width: 180px;
+  height: 50px;
+  font-size: 20px;
+  text-align: center;
+  background-color: $background;
+  color: $darkblue;
+  border-style: double;
+  border-color: $darkblue;
+  //margin-left: 10px;
+}
+#data_button:hover,
+#add_slot:hover {
+  cursor: pointer;
+  background-color: $lightblue;
+}
+input {
+  height: 30px;
+  width: 50px;
+  font-size: 28px;
+  background-color: $background;
+  border-style: double;
+  border-color: $darkblue;
+  margin-left: 2px;
+  margin-right: 2px;
+}
+input:hover {
+  background-color: $lightblue;
+}
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+ol {
+  position: absolute;
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  font-size: 18px;
+  height: 2em;
+  line-height: 2em;
+  text-align: center;
+  margin-left: 0.3vw;
+}
+ol > li {
+  float: left;
+  background-color: $background;
+  width: 170px;
+  border-style: double;
+  border-color: $darkblue;
+  margin-left: 1px;
+}
+ol > li:hover {
+  color: $darkblue;
+  cursor: pointer;
+}
+ol > li:hover {
+  background-color: $lightblue;
+}
+ol > li > ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+ol > li:first-child {
+  margin-left: 0;
+}
+ol {
+  background-color: $lightblue;
+}
+ol > li > ul > li {
+  background-color: $lightblue;
+  border-top: solid;
+  border-color: $menulineblue;
+}
+ol > li > ul > li:hover {
+  background-color: rgb(104, 195, 255);
+}
+.menuActive {
+  background-color: $menuactiv;
+}
+ol > li > ul {
+  display: none;
+}
+ol > li:hover > ul {
+  display: block;
+}
+input.upload {
+  opacity: 0;
+  position: relative;
+  z-index: 2;
+  height: 100%;
+  width: 100%;
+  top: 0px;
+  left: 0px;
+}
+input.upload:hover {
+  cursor: pointer;
+}
+#liload {
+  height: 37px;
+  position: relative;
+  cursor: pointer;
+}
+.loadtxt {
+  position: absolute;
+  cursor: pointer;
+  z-index: 1;
+  height: 100%;
+  width: 100%;
+  top: 0px;
+  left: 0px;
+}

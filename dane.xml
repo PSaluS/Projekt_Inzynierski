@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="iso-8859-2" ?>
+
+<Dane>
+
+<dana>
+<X>2</X>
+<Y>9</Y>
+</dana>
+
+<dana>
+<X>3</X>
+<Y>8</Y>
+</dana>
+
+<dana><X>5</X><Y>9</Y></dana><dana><X>8</X><Y>5</Y></dana><dana><X>4</X><Y>9</Y></dana><dana><X>9</X><Y>5</Y></dana><dana><X>4</X><Y>1</Y></dana><dana><X>5</X><Y>3</Y></dana></Dane>

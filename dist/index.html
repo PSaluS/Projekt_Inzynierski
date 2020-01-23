@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta charset="ISO-8859-2">
+    <title>Praca Inżynierska Paweł Salus</title>
+</head>
+<body>
+    <div class="all">
+            <header id="header">
+                Praca Inżynierska Paweł Salus
+            </header>
+            <nav>
+                <ol>
+                    <li id="liload">
+                            <input id="xmlload" type="file" id="upload" class="upload" class="pilik" accept=".xml" multiple=""/>
+                            <div class="loadtxt">Wczytaj z pliku</div>
+                        </li>
+                    <li>Forma wykresu
+                      <ul>
+                        <li id="chart1">Słupkowy</li>
+                        <li id="chart2">Punktowy</li>
+                      </ul>
+                    </li>
+                    <li>Kolory wykresu
+                      <ul>
+                        <li id="color1">Kompozycja 1</li>
+                        <li id="color2">Kompozycja 2</li>
+                        <li id="color3">Kompozycja 3</li>
+                        <li id="color4">Kompozycja losowa</li>
+                      </ul>
+                    </li>
+                    <li>Format danych
+                      <ul>
+                        <li id="form1">Dane jednowymiarowe</li>
+                        <li id="form2">Dane dwuwymiarowe</li>
+                        <li id="form3">Dane trójwymiarowe</li>
+                      </ul>
+                    </li>
+                  </ol>
+            </nav>
+            <main>
+                    <div class="data" id="data">
+                        <form action=" ">
+                            <div class="data_el">
+                                <input type="number" name="x0" id="x0">
+                                <input type="number" name="y0" id="y0">
+                                <input type="number" name="z0" id="z0">
+                            </div>
+                            <div class="data_el">
+
+                                    <input type="number" name="x1" id="x1">
+                                    <input type="number" name="y1" id="y1">
+                                    <input type="number" name="z1" id="z1">
+                                </div>
+                            <div class="data_el">
+
+                                    <input type="number" name="x2" id="x2">
+                                    <input type="number" name="y2" id="y2">
+                                    <input type="number" name="z2" id="z2">
+                                </div>
+                            <div class="data_el">
+                                <input type="number" name="x3" id="x3">
+                                <input type="number" name="y3" id="y3">
+                                <input type="number" name="z3" id="z3">
+                            </div>
+                            <div class="data_el">
+
+                                    <input type="number" name="x4" id="x4">
+                                    <input type="number" name="y4" id="y4">
+                                    <input type="number" name="z4" id="z4">
+                                </div>
+                            <div class="data_el">
+
+                                    <input type="number" name="x5" id="x5">
+                                    <input type="number" name="y5" id="y5">
+                                    <input type="number" name="z5" id="z5">
+                                </div>
+                            <div class="data_el">
+                                <input type="number" name="x6" id="x6">
+                                <input type="number" name="y6" id="y6">
+                                <input type="number" name="z6" id="z6">
+                            </div>
+                            <div class="data_el">
+
+                                    <input type="number" name="x7" id="x7">
+                                    <input type="number" name="y7" id="y7">
+                                    <input type="number" name="z7" id="z7">
+                                </div>
+                            <div class="data_el">
+                                <button id="data_button" type="button">Wygeneruj wykres</button>
+                                <button id="add_slot" calss="sec_butt" type="button">Dodaj wiersz</button>
+                            </div>
+                        </form>
+                        </div>
+                        <div id="chart">
+                        </div>
+            </main>
+            <footer id="foot">
+                Praca Inżynierska
+                autor: Paweł Salus
+            </footer>
+    </div>
+<script type="text/javascript" src="index.js"></script></body>
+</html>
