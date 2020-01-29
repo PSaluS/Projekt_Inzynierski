@@ -9,19 +9,18 @@ body {
   background-color: $background;
 }
 header {
-  font-size: 72px;
+  font-size: 55px;
   text-align: center;
   color: $darkblue;
   min-width: 895px;
 }
-#header:hover{
+#header:hover {
   cursor: default;
 }
 footer {
   border-style: double;
   border-color: $darkblue;
   height: 50px;
-  // width: 1495px;
   width: 97.3vw;
   text-align: center;
   color: $darkblue;
@@ -40,10 +39,9 @@ footer {
   border-color: $darkblue;
   margin-left: 0.3vw;
   width: 19vw;
-  min-width: min-content;
   overflow: auto;
   height: 74vh;
-  max-width: 212px;
+  max-width: 240px;
 }
 #chart {
   border-style: double;
@@ -74,7 +72,6 @@ main {
   color: $darkblue;
   border-style: double;
   border-color: $darkblue;
-  //margin-left: 10px;
 }
 #data_button:hover,
 #add_slot:hover {

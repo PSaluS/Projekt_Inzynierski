@@ -6,7 +6,6 @@ var kamera = new THREE.PerspectiveCamera(
   0.1,
   1000
 );
-
 var renderer = new THREE.WebGLRenderer();
 
 function init() {
@@ -43,7 +42,7 @@ menuActiv();
 
 var light = function() {
   var PointLight = new THREE.PointLight(0xffffff, 2, 0);
-  var AmbientLight = new THREE.AmbientLight( 0x808080 );
+  var AmbientLight = new THREE.AmbientLight(0x808080);
   scena.add(PointLight);
   scena.add(AmbientLight);
   PointLight.position.set(0, 10.0, 15.0);
@@ -74,7 +73,6 @@ function stringToXML(text) {
     if (!foundErr || !foundErr.length || !foundErr[0].childNodes.length) {
       return xml;
     }
-
     return null;
   } catch (e) {}
 }
@@ -127,14 +125,12 @@ xmlLoad.onchange = function() {
   var uploader = this;
   var reader = new FileReader();
   reader.readAsText(uploader.files[0], "UTF-8");
-  reader.onprogress = function(evt) {
-  };
+  reader.onprogress = function(evt) {};
   reader.onload = function(evt) {
     var xml_data = stringToXML(reader.result);
 
     dl = ([] = xml_data.documentElement.childNodes).length;
     char_form = xml_data.documentElement.childNodes[0].children.length;
-    console.log(char_form);
 
     charFromCHange();
 
@@ -188,7 +184,6 @@ function buttClick() {
   var max_X = 0;
   var max_Y = 0;
   var max_Z = 0;
-
 
   for (var i = 0; i < dates.length; i++) {
     if (char_type == 1) {
@@ -259,13 +254,13 @@ function buttClick() {
   }
 
   if (char_type == 1) {
+    var skala = [];
     var geometriaPlaszczyzny = new THREE.PlaneGeometry(2 + 2 * dl, 3);
     var geometriaPlaszczyzny2 = new THREE.PlaneGeometry(2 + 2 * dl, 5.5);
     var podlogaMaterial = new THREE.MeshPhongMaterial({ color: 0x555555 });
     var podloga = new THREE.Mesh(geometriaPlaszczyzny, podlogaMaterial);
     var sciana = new THREE.Mesh(geometriaPlaszczyzny2, podlogaMaterial);
     var geometriaosi = new THREE.CylinderGeometry(0.03, 0.03, 2 + 2 * dl, 32);
-    var skala = [];
     var materialosi = new THREE.MeshBasicMaterial({ color: 0x00000 });
     scena.add(podloga);
     scena.add(sciana);
@@ -278,22 +273,18 @@ function buttClick() {
     sciana.position.y -= 1.5;
     sciana.position.z -= 1.5;
 
-    for (var i = 0; i < 10; i++) {
+    for (var i = 0; i < 11; i++) {
       skala[i] = new THREE.Mesh(geometriaosi, materialosi);
       scena.add(skala[i]);
       skala[i].rotation.z = -Math.PI / 2;
       skala[i].position.z = -1.5;
+      skala[i].position.y = i * 0.5 - 4;
       if (dl > 8) skala[i].position.x += dl - 8;
-      if (char_form == 1) {
-        skala[i].position.y = i * mux_X - 4;
-      } else {
-        skala[i].position.y = i * mux_Y - 4;
-      }
     }
   } else {
     //układ kartezjański
     var geometriaosi = new THREE.CylinderGeometry(0.03, 0.03, 18, 32);
-    var geometriaskali = new THREE.CylinderGeometry(0.1, 0.1, 0.05, 32);
+    var geometriaskali = new THREE.CylinderGeometry(0.08, 0.08, 0.05, 32);
     var geometriastrzaly = new THREE.CylinderGeometry(0.001, 0.1, 0.5, 32);
     var materialosi = new THREE.MeshBasicMaterial({ color: 0x00000 });
     var osx = new THREE.Mesh(geometriaosi, materialosi);
@@ -305,23 +296,24 @@ function buttClick() {
     scena.add(arrowx);
     arrowx.rotation.z = -Math.PI / 2;
     arrowx.position.x = 9;
-    if (char_form > 1) {
+    if (char_form >= 1) {
       for (var i = 0; i < 10; i++) {
         skalax[i] = new THREE.Mesh(geometriaskali, materialosi);
         scena.add(skalax[i]);
         skalax[i].rotation.z = -Math.PI / 2;
-        skalax[i].position.x = i * mux2 + mux2;
+        skalax[i].position.x = i * (7 / 10) + 7 / 10;
         skalax[i + 10] = new THREE.Mesh(geometriaskali, materialosi);
         scena.add(skalax[i + 10]);
         skalax[i + 10].rotation.z = -Math.PI / 2;
-        skalax[i + 10].position.x = i * mux2 * -1 - mux2;
+        skalax[i + 10].position.x = (i * (7 / 10) + 7 / 10) * -1;
       }
     }
     osx.rotation.z = -Math.PI / 2;
     if (char_form == 1) {
-      skalax[0] = new THREE.Mesh(geometriaskali, materialosi);
-      scena.add(skalax[0]);
-      skalax[0].rotation.z = -Math.PI / 2;
+      var geometriaskaliC = new THREE.CylinderGeometry(0.2, 0.2, 0.05, 32);
+      var skalaZero = new THREE.Mesh(geometriaskaliC, materialosi);
+      scena.add(skalaZero);
+      skalaZero.rotation.z = -Math.PI / 2;
     }
     if (char_form >= 2) {
       var osy = new THREE.Mesh(geometriaosi, materialosi);
@@ -333,10 +325,10 @@ function buttClick() {
       for (var i = 0; i < 10; i++) {
         skalay[i] = new THREE.Mesh(geometriaskali, materialosi);
         scena.add(skalay[i]);
-        skalay[i].position.y = i * mux2 + mux2;
+        skalay[i].position.y = i * (7 / 10) + 7 / 10;
         skalay[i + 10] = new THREE.Mesh(geometriaskali, materialosi);
         scena.add(skalay[i + 10]);
-        skalay[i + 10].position.y = i * mux2 * -1 - mux2;
+        skalay[i + 10].position.y = (i * (7 / 10) + 7 / 10) * -1;
       }
     }
     if (char_form == 3) {
@@ -352,11 +344,11 @@ function buttClick() {
         skalaz[i] = new THREE.Mesh(geometriaskali, materialosi);
         scena.add(skalaz[i]);
         skalaz[i].rotation.x = -Math.PI / 2;
-        skalaz[i].position.z = i * mux2 + mux2;
+        skalaz[i].position.z = i * (7 / 10) + 7 / 10;
         skalaz[i + 10] = new THREE.Mesh(geometriaskali, materialosi);
         scena.add(skalaz[i + 10]);
         skalaz[i + 10].rotation.x = -Math.PI / 2;
-        skalaz[i + 10].position.z = i * mux2 * -1 - mux2;
+        skalaz[i + 10].position.z = (i * (7 / 10) + 7 / 10) * -1;
       }
     }
   }
@@ -368,7 +360,6 @@ function buttClick() {
   render();
 
   if (char_type == 1) {
-
     clearTable(geometriaBox);
     for (var i = 0; i < X.length; i++) {
       if (char_form == 1)
@@ -381,7 +372,6 @@ function buttClick() {
   }
 
   if (char_type == 2) {
-
     clearTable(geometriaBox);
     for (var i = 0; i < X.length; i++)
       geometriaBox[i] = new THREE.SphereGeometry(0.1, 32, 32);
@@ -390,7 +380,6 @@ function buttClick() {
   var ic = 0;
 
   if (char_color == 1) {
-
     clearTable(BoxMaterial);
     for (var i = 0; i < 8; i++)
       switch (ic) {
@@ -431,7 +420,6 @@ function buttClick() {
   }
 
   if (char_color == 2) {
-
     clearTable(BoxMaterial);
     for (var i = 0; i < 8; i++)
       switch (ic) {
@@ -472,7 +460,6 @@ function buttClick() {
   }
 
   if (char_color == 3) {
-
     clearTable(BoxMaterial);
     for (var i = 0; i < 8; i++)
       BoxMaterial[i] = new THREE.MeshPhongMaterial({ color: 0x111111 });
@@ -497,7 +484,6 @@ function buttClick() {
   }
 
   if (char_type == 2) {
-
     for (var i = 0; i < X.length; i++) {
       Boxs[i].position.x = X[i];
       if (Y[i]) Boxs[i].position.y = Y[i];

@@ -4,7 +4,7 @@ body {
 }
 
 header {
-  font-size: 72px;
+  font-size: 55px;
   text-align: center;
   color: #000b6e;
   min-width: 895px;
@@ -39,12 +39,9 @@ footer {
   border-color: #000b6e;
   margin-left: 0.3vw;
   width: 19vw;
-  min-width: -webkit-min-content;
-  min-width: -moz-min-content;
-  min-width: min-content;
   overflow: auto;
   height: 74vh;
-  max-width: 212px;
+  max-width: 240px;
 }
 
 #chart {

@@ -1,0 +1,7 @@
+﻿  Gen.cpp
+C:\Users\pluto\OneDrive\Dokumenty\Nowy folder\Gen\Gen.cpp(14,12): warning C4244:  "argument": konwersja z "time_t" do "unsigned int", możliwa utrata danych
+C:\Users\pluto\OneDrive\Dokumenty\Nowy folder\Gen\Gen.cpp(43,11): warning C4244:  "inicjowanie": konwersja z "float" do "int", możliwa utrata danych
+C:\Users\pluto\OneDrive\Dokumenty\Nowy folder\Gen\Gen.cpp(50,9): warning C4244:  "=": konwersja z "float" do "int", możliwa utrata danych
+C:\Users\pluto\OneDrive\Dokumenty\Nowy folder\Gen\Gen.cpp(56,10): warning C4244:  "=": konwersja z "float" do "int", możliwa utrata danych
+C:\Users\pluto\OneDrive\Dokumenty\Nowy folder\Gen\Gen.cpp(63,10): warning C4244:  "=": konwersja z "float" do "int", możliwa utrata danych
+  Gen.vcxproj -> C:\Users\pluto\OneDrive\Dokumenty\Nowy folder\Gen\Debug\Gen.exe
