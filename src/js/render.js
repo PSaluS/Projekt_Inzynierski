@@ -1,3 +1,5 @@
+import * as THREE from 'three';
+import OrbitControls from 'three-orbitcontrols';
 var scena = new THREE.Scene();
 var kamera = new THREE.PerspectiveCamera(
   45,
@@ -17,7 +19,7 @@ function init() {
   renderer.setClearColor(0xc0c0c0, 1);
   document.getElementById("chart").appendChild(renderer.domElement);
 
-  var controls = new THREE.OrbitControls(kamera, renderer.domElement);
+  var controls = new OrbitControls(kamera, renderer.domElement);
 
   controls.enableDamping = true;
   controls.dampingFactor = 0.05;
@@ -77,17 +79,13 @@ function stringToXML(text) {
   } catch (e) {}
 }
 
-setDataTable = function(new_data) {
-  document.getElementById("data").innerHTML = new_data;
-};
-
-clearTable = function(tab) {
+function clearTable(tab) {
   for (var i = 0; i < tab.length; i++) {
     trash = tab.splice(i, tab.length);
   }
 };
 
-charFromCHange = function() {
+function charFromCHange() {
   var new_data = `<form action=" ">
       `;
   for (var i = 0; i < dl; i++) {
@@ -121,7 +119,7 @@ charFromCHange = function() {
   document.getElementById("add_slot").onclick = addSlot;
 };
 
-xmlLoad.onchange = function() {
+xmlLoad.onchange = function () {
   var uploader = this;
   var reader = new FileReader();
   reader.readAsText(uploader.files[0], "UTF-8");

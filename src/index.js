@@ -1,7 +1,4 @@
-// import "./style.scss";
-// import "./js/three.js";
-// import "./js/OrbitControls.js";
-// import "./js/render.js";
+import "./style.scss";
 function sizeupdate() {
   var fw =
     document.getElementById("data").offsetWidth +

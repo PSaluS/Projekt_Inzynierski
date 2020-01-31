@@ -4,19 +4,17 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 module.exports = {
   entry: {
     index: "./src/index.js",
-    render: "./src/js/render.js",
-    camControl: "./src/js/OrbitControls.js",
-    threeJS: './src/js/three.js'
+    render: "./src/js/render.js"
   },
   output: {
     path: path.resolve(__dirname, "dist"),
-    filename: "index.js"
+    filename: "[name].js"
   },
   module: {
     rules: [
       {
         test: /\.js$/,
-        exclude: /(node_modules|bower_components)/,
+        exclude: /(node_modules|bower_components|three.js)/,
         use: {
           loader: "babel-loader",
           options: {
