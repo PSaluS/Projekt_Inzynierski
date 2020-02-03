@@ -50,6 +50,7 @@ footer {
   background-color: black;
   width: 78vw;
   height: 74vh;
+  position: relative;
 }
 main {
   display: flex;
@@ -106,6 +107,7 @@ ol {
   line-height: 2em;
   text-align: center;
   margin-left: 0.3vw;
+  z-index: 1;
 }
 ol > li {
   float: left;
@@ -175,4 +177,13 @@ input.upload:hover {
   width: 100%;
   top: 0px;
   left: 0px;
+}
+.label {
+  background-color: rgba($color: #666666, $alpha: 0.75);
+  border: 3px solid #444444;
+  color: white;
+  font-size: 30px;
+}
+.labelH {
+  visibility: hidden;
 }

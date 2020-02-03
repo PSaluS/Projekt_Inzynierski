@@ -1,14 +1,17 @@
 import * as THREE from 'three';
 import OrbitControls from 'three-orbitcontrols';
+import { CSS2DRenderer, CSS2DObject } from 'three/examples/jsm/renderers/CSS2DRenderer.js';
+import {Projector} from 'three/examples/jsm/renderers/Projector';
 var scena = new THREE.Scene();
 var kamera = new THREE.PerspectiveCamera(
   45,
   document.getElementById("chart").offsetWidth /
-    document.getElementById("chart").offsetHeight,
+  document.getElementById("chart").offsetHeight,
   0.1,
   1000
 );
 var renderer = new THREE.WebGLRenderer();
+var labelRenderer = new CSS2DRenderer();
 
 function init() {
   kamera.position.z = 6.5;
@@ -19,13 +22,14 @@ function init() {
   renderer.setClearColor(0xc0c0c0, 1);
   document.getElementById("chart").appendChild(renderer.domElement);
 
-  var controls = new OrbitControls(kamera, renderer.domElement);
+  labelRenderer.setSize(document.getElementById("chart").offsetWidth * 0.996, document.getElementById("chart").offsetHeight * 0.996);
+  labelRenderer.domElement.style.position = 'absolute';
+	labelRenderer.domElement.style.top = 0;
+	document.getElementById('chart').appendChild(labelRenderer.domElement);
 
-  controls.enableDamping = true;
-  controls.dampingFactor = 0.05;
-  controls.screenSpacePanning = false;
-  controls.maxDistance = 500;
-  controls.maxPolarAngle = Math.PI / 2;
+  var controls = new OrbitControls(kamera, labelRenderer.domElement);
+
+  mouse = new THREE.Vector2()
 }
 var xmlLoad = document.getElementById("xmlload");
 var char_type = 1;
@@ -39,6 +43,10 @@ var X = [];
 var Y = [];
 var Z = [];
 var trash;
+var mouse;
+var text;
+var label;
+var labelVisibility = [];
 
 menuActiv();
 
@@ -53,11 +61,12 @@ var light = function() {
 var render = function() {
   requestAnimationFrame(render);
   renderer.render(scena, kamera);
+  labelRenderer.render(scena,kamera);
 };
 
 function animate() {
   requestAnimationFrame(animate);
-  controls.update();
+  //controls.update();
   render();
 }
 
@@ -159,6 +168,17 @@ xmlLoad.onchange = function () {
     alert("Błąd wczytywania pliku!");
   };
 };
+
+function MouseClickDown(event) {
+	mouse.x = ( (event.clientX - document.getElementById('chart').offsetLeft) / document.getElementById('chart').offsetWidth ) * 2 - 1;
+  mouse.y = - ( (event.clientY - document.getElementById('chart').offsetTop)/ document.getElementById('chart').offsetHeight ) * 2 + 1;
+  let ray = new THREE.Raycaster();
+  ray.setFromCamera( mouse, kamera );
+  var intersects = ray.intersectObjects(Boxs);
+  if ( intersects.length > 0 ) {
+    showLabel(Number(intersects[0].object.name));
+  }
+}
 
 function buttClick() {
   init();
@@ -355,7 +375,6 @@ function buttClick() {
   kamera.position.set(0, 4, 11);
 
   light();
-  render();
 
   if (char_type == 1) {
     clearTable(geometriaBox);
@@ -467,6 +486,8 @@ function buttClick() {
   var ic = 0;
   for (var i = 0; i < X.length; i++) {
     Boxs[i] = new THREE.Mesh(geometriaBox[i], BoxMaterial[ic]);
+    Boxs[i].name = i;
+    labelVisibility[i] = 0;
     if (ic >= 7) ic = 0;
     else ic++;
   }
@@ -492,7 +513,44 @@ function buttClick() {
   for (var i = 0; i < X.length; i++) {
     scena.add(Boxs[i]);
   }
-  animate();
+
+  document.addEventListener( 'mousedown', MouseClickDown, false );
+  render();
+  //animate();
+}
+
+function showLabel(obj) {
+  //console.log(obj);
+  console.log(labelVisibility[obj]);
+  if(labelVisibility[Number(obj)] == 0)
+  {
+  text = document.createElement('div');
+  text.className ='label';
+  text.remove('labelH');
+  text.style.color = 'white';
+
+  if(char_form == 3)
+  text.textContent = `${dates[Number(obj)]} ${dates[Number(obj) + 1]} ${dates[Number(obj) + 2]}`;
+
+  if(char_form == 2)
+  text.textContent = `${dates[Number(obj)]} ${dates[Number(obj) + 1]}`;
+
+  if(char_form == 1)
+  text.textContent = `${dates[Number(obj)]}`;
+
+  label = new CSS2DObject(text);
+  label.position.set(0,0,0);
+  Boxs[Number(obj)].add(label);
+
+  labelVisibility[obj] = 1;
+  }
+
+  else
+  {
+    text.className = "labelH";
+    labelVisibility[Number(obj)] = 0;
+    label.remove();
+  }
 }
 
 function addSlot() {
