@@ -27,7 +27,6 @@ footer {
   font-size: 25px;
   display: table-cell;
   vertical-align: middle;
-  transform: translateX(0.3vw);
 }
 .all {
   display: block;
@@ -37,10 +36,8 @@ footer {
 .data {
   border-style: double;
   border-color: $darkblue;
-  margin-left: 0.3vw;
   width: 19vw;
   overflow: auto;
-  height: 74vh;
   max-width: 240px;
 }
 #chart {
@@ -54,7 +51,7 @@ footer {
 }
 main {
   display: flex;
-  margin-top: 42px;
+  //margin-top: 42px;
 }
 .data_el {
   padding: 5px;
@@ -106,7 +103,6 @@ ol {
   height: 2em;
   line-height: 2em;
   text-align: center;
-  margin-left: 0.3vw;
   z-index: 1;
 }
 ol > li {
@@ -160,8 +156,6 @@ input.upload {
   width: 100%;
   top: 0px;
   left: 0px;
-}
-input.upload:hover {
   cursor: pointer;
 }
 #liload {
@@ -183,6 +177,7 @@ input.upload:hover {
   border: 3px solid #444444;
   color: white;
   font-size: 30px;
+  cursor: default;
 }
 .labelH {
   visibility: hidden;

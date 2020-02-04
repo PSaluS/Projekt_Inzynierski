@@ -1,7 +1,7 @@
 import * as THREE from 'three';
 import OrbitControls from 'three-orbitcontrols';
 import { CSS2DRenderer, CSS2DObject } from 'three/examples/jsm/renderers/CSS2DRenderer.js';
-import {Projector} from 'three/examples/jsm/renderers/Projector';
+
 var scena = new THREE.Scene();
 var kamera = new THREE.PerspectiveCamera(
   45,
@@ -42,6 +42,7 @@ var Boxs = [];
 var X = [];
 var Y = [];
 var Z = [];
+var dateX = [], dateY = [], dateZ =[];
 var trash;
 var mouse;
 var text;
@@ -64,12 +65,6 @@ var render = function() {
   labelRenderer.render(scena,kamera);
 };
 
-function animate() {
-  requestAnimationFrame(animate);
-  //controls.update();
-  render();
-}
-
 var dl = 8;
 
 function stringToXML(text) {
@@ -89,9 +84,11 @@ function stringToXML(text) {
 }
 
 function clearTable(tab) {
+  if(tab.length > 0) {
   for (var i = 0; i < tab.length; i++) {
     trash = tab.splice(i, tab.length);
   }
+}
 };
 
 function charFromCHange() {
@@ -183,20 +180,37 @@ function MouseClickDown(event) {
 function buttClick() {
   init();
   clearTable(dates);
+  clearTable(dateX);
+  clearTable(dateY);
+  clearTable(dateZ);
   for (var i = 0; i < dl; i++) {
-    if (char_type == 1)
+    if (char_type == 1) {
       dates.push(Math.abs(document.getElementById(`x${i}`).value));
-    else dates.push(document.getElementById(`x${i}`).value);
-
+      dateX.push(Math.abs(document.getElementById(`x${i}`).value));
+    }
+    else {
+       dates.push(document.getElementById(`x${i}`).value);
+       dateX.push(document.getElementById(`x${i}`).value);
+    }
     if (char_form >= 2) {
-      if (char_type == 1)
+      if (char_type == 1) {
         dates.push(Math.abs(document.getElementById(`y${i}`).value));
-      else dates.push(document.getElementById(`y${i}`).value);
+        dateY.push(Math.abs(document.getElementById(`y${i}`).value));
+      }
+      else {
+        dates.push(document.getElementById(`y${i}`).value);
+        dateY.push(document.getElementById(`y${i}`).value);
+      }
     }
     if (char_form == 3) {
-      if (char_type == 1)
+      if (char_type == 1) {
         dates.push(Math.abs(document.getElementById(`z${i}`).value));
-      else dates.push(document.getElementById(`z${i}`).value);
+        dateZ.push(Math.abs(document.getElementById(`z${i}`).value));
+      }
+      else {
+        dates.push(document.getElementById(`z${i}`).value);
+        dateZ.push(document.getElementById(`z${i}`).value);
+      }
     }
   }
   var max_X = 0;
@@ -516,13 +530,10 @@ function buttClick() {
 
   document.addEventListener( 'mousedown', MouseClickDown, false );
   render();
-  //animate();
 }
 
 function showLabel(obj) {
-  //console.log(obj);
-  console.log(labelVisibility[obj]);
-  if(labelVisibility[Number(obj)] == 0)
+  if(labelVisibility[obj] == 0)
   {
   text = document.createElement('div');
   text.className ='label';
@@ -530,17 +541,17 @@ function showLabel(obj) {
   text.style.color = 'white';
 
   if(char_form == 3)
-  text.textContent = `${dates[Number(obj)]} ${dates[Number(obj) + 1]} ${dates[Number(obj) + 2]}`;
+  text.textContent = `${dateX[obj]} ${dateY[obj]} ${dateZ[obj]}`;
 
   if(char_form == 2)
-  text.textContent = `${dates[Number(obj)]} ${dates[Number(obj) + 1]}`;
+  text.textContent = `${dateX[obj]} ${dateY[obj]}`;
 
   if(char_form == 1)
-  text.textContent = `${dates[Number(obj)]}`;
+  text.textContent = `${dateX[obj]}`;
 
   label = new CSS2DObject(text);
   label.position.set(0,0,0);
-  Boxs[Number(obj)].add(label);
+  Boxs[obj].add(label);
 
   labelVisibility[obj] = 1;
   }
@@ -548,7 +559,7 @@ function showLabel(obj) {
   else
   {
     text.className = "labelH";
-    labelVisibility[Number(obj)] = 0;
+    labelVisibility[obj] = 0;
     label.remove();
   }
 }

@@ -3,8 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta charset="ISO-8859-2">
-    <title>Praca Inżynierska Paweł Salus</title>
-    <!--<link rel="stylesheet" type="text/css" href="style.css">-->
+    <title>Praca Inżynierska "Trójwymiarowa wizualizacja danych z pomocą WebGL" Paweł Salus</title>
 </head>
 <body>
     <div id="all" class="all">
@@ -12,7 +11,7 @@
                 Trójwymiarowa wizualizacja danych z pomocą WebGL
             </header>
             <nav>
-                <ol>
+                <ol id="menu">
                     <li id="liload">
                             <input id="xmlload" type="file" id="upload" class="upload" class="pilik" accept=".xml" multiple=""/>
                             <div class="loadtxt">Wczytaj z pliku</div>
@@ -40,7 +39,7 @@
                     </li>
                   </ol>
             </nav>
-            <main>
+            <main  id="main">
                     <div class="data" id="data">
                         <form action=" ">
                             <div class="data_el">
@@ -102,11 +101,5 @@
                 autor: Paweł Salus
             </footer>
     </div>
-    <!--
-<script src="./index.js"></script>
-<script src="./three.js"></script>
-<script src="./js/OrbitControls.js"></script>
-<script src="./js/render.js"></script>
--->
 <script type="text/javascript" src="index.js"></script><script type="text/javascript" src="render.js"></script></body>
 </html>
