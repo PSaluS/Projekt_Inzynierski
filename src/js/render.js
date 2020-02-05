@@ -607,6 +607,25 @@ function addSlot() {
   charFromCHange();
 }
 
+function keyPutDown (event) {
+  const keyCode = event.which;
+  const arrDash = 5;
+  switch (keyCode) {
+    case(39):
+    kamera.position.x += arrDash;
+    break;
+    case(37):
+    kamera.position.x += (-arrDash);
+    break;
+    case(38):
+    kamera.position.z += (-arrDash);
+    break;
+    case(40):
+    kamera.position.z +=arrDash2;
+    break;
+  }
+  }
+
 function menuActiv() {
   document.getElementById("chart1").classList.remove("menuActive");
   document.getElementById("chart2").classList.remove("menuActive");
@@ -665,3 +684,4 @@ document.getElementById("form3").onclick = function() {
   menuActiv();
 };
 document.getElementById("add_slot").onclick = addSlot;
+document.addEventListener("keydown", keyPutDown, flase);
