@@ -52,11 +52,11 @@ var labelVisibility = [];
 menuActiv();
 
 var light = function() {
-  var PointLight = new THREE.PointLight(0xffffff, 2, 0);
-  var AmbientLight = new THREE.AmbientLight(0x808080);
-  scena.add(PointLight);
+  var AmbientLight = new THREE.AmbientLight(0xffffff, 0.4);
+  var DirectionalLight = new THREE.DirectionalLight(0xffffff, 0.9);
+  DirectionalLight.position.set(1,5,5);
+  scena.add(DirectionalLight);
   scena.add(AmbientLight);
-  PointLight.position.set(0, 10.0, 15.0);
 };
 
 var render = function() {
@@ -246,38 +246,34 @@ function buttClick() {
   if (char_type == 1) {
     if (char_form == 1) var mux_X = 5 / max_X;
     if (char_form >= 2) {
-      var mux_X = 2 / max_X;
+      var mux_X = 5 / max_X;
       var mux_Y = 5 / max_Y;
     }
-    if (char_form == 3) var mux_Z = 2 / max_Z;
+    if (char_form == 3) var mux_Z = 5 / max_Z;
   }
 
   if (char_type == 2) {
     var mux_X = 7 / max_X;
     if (char_form >= 2) var mux_Y = 7 / max_Y;
     if (char_form == 3) var mux_Z = 7 / max_Z;
-
+  }
     var mux2 = mux_X;
     if (mux_Y < mux2) mux2 = mux_Y;
     if (mux_Z < mux2) mux2 = mux_Z;
-  }
 
   clearTable(X);
   clearTable(Y);
   clearTable(Z);
 
   for (var i = 0; i < dates.length; i++) {
-    if (char_type == 1) X.push(dates[i] * mux_X);
-    if (char_type == 2) X.push(dates[i] * mux2);
+      X.push(dates[i] * mux2);
     if (char_form >= 2) {
       i++;
-      if (char_type == 1) Y.push(dates[i] * mux_Y);
-      if (char_type == 2) Y.push(dates[i] * mux2);
+      Y.push(dates[i] * mux2);
     }
     if (char_form == 3) {
       i++;
-      if (char_type == 1) Z.push(dates[i] * mux_Z);
-      if (char_type == 2) Z.push(dates[i] * mux2);
+       Z.push(dates[i] * mux2);
     }
   }
 
@@ -287,31 +283,60 @@ function buttClick() {
 
   if (char_type == 1) {
     var skala = [];
-    var geometriaPlaszczyzny = new THREE.PlaneGeometry(2 + 2 * dl, 3);
-    var geometriaPlaszczyzny2 = new THREE.PlaneGeometry(2 + 2 * dl, 5.5);
-    var podlogaMaterial = new THREE.MeshPhongMaterial({ color: 0x555555 });
+    var skala2 = [];
+    var skala3 = [];
+    var skala4 = [];
+    var geometriaPlaszczyzny = new THREE.PlaneGeometry(5 * dl, 5.5);
+    var geometriaPlaszczyzny2 = new THREE.PlaneGeometry(5 * dl, 5.5);
+    var podlogaMaterial = new THREE.MeshPhongMaterial({ color: 0x888888 });
     var podloga = new THREE.Mesh(geometriaPlaszczyzny, podlogaMaterial);
     var sciana = new THREE.Mesh(geometriaPlaszczyzny2, podlogaMaterial);
-    var geometriaosi = new THREE.CylinderGeometry(0.03, 0.03, 2 + 2 * dl, 32);
+    var geometriaosi = new THREE.CylinderGeometry(0.03, 0.03, 5 * dl, 32);
+    var geometriaosi2 = new THREE.CylinderGeometry(0.03, 0.03, 5.5, 32);
     var materialosi = new THREE.MeshBasicMaterial({ color: 0x00000 });
+    var materialosi2 = new THREE.MeshBasicMaterial({ color: 0xffffff });
     scena.add(podloga);
     scena.add(sciana);
     podloga.rotation.x = -Math.PI / 2;
-    if (dl > 8) {
-      podloga.position.x += dl - 8;
-      sciana.position.x += dl - 8;
-    }
+    podloga.position.x += -2.5 + (dl * 2.5);
+    sciana.position.x += -2.5 + (dl * 2.5);
     podloga.position.y -= 4;
-    sciana.position.y -= 1.5;
-    sciana.position.z -= 1.5;
+    sciana.position.y -= 1.25;
+    sciana.position.z -=  2.75;
 
     for (var i = 0; i < 11; i++) {
       skala[i] = new THREE.Mesh(geometriaosi, materialosi);
       scena.add(skala[i]);
       skala[i].rotation.z = -Math.PI / 2;
-      skala[i].position.z = -1.5;
+      skala[i].position.z = -2.75;
       skala[i].position.y = i * 0.5 - 4;
-      if (dl > 8) skala[i].position.x += dl - 8;
+      skala[i].position.x += -2.5 + (dl * 2.5);
+
+      skala2[i] = new THREE.Mesh(geometriaosi, materialosi);
+      scena.add(skala2[i]);
+      skala2[i].rotation.z = -Math.PI / 2;
+      skala2[i].position.z = i * 0.5 - 2.75;
+      skala2[i].position.y = -4;
+      skala2[i].position.x += -2.5 + (dl * 2.5);
+    }
+    for(var i = 0; i < (10*dl)+1; i++) {
+      if(i%10 == 0) {
+        skala3[i]= new THREE.Mesh(geometriaosi2, materialosi2);
+        skala4[i]= new THREE.Mesh(geometriaosi2, materialosi2);
+      }
+      else {
+        skala3[i]= new THREE.Mesh(geometriaosi2, materialosi);
+        skala4[i]= new THREE.Mesh(geometriaosi2, materialosi);
+      }
+      scena.add(skala3[i]);
+      skala3[i].position.z = -2.75;
+      skala3[i].position.x = -2.5 + (0.5*i);
+      skala3[i].position.y = -1.25;
+
+      scena.add(skala4[i]);
+      skala4[i].rotation.x= -Math.PI / 2;
+      skala4[i].position.y = -4;
+      skala4[i].position.x = -2.5 + (0.5*i);
     }
   } else {
     //układ kartezjański
@@ -394,7 +419,7 @@ function buttClick() {
     clearTable(geometriaBox);
     for (var i = 0; i < X.length; i++) {
       if (char_form == 1)
-        geometriaBox[i] = new THREE.BoxGeometry(1.5, X[i], 1.5);
+        geometriaBox[i] = new THREE.BoxGeometry(3, X[i], 3);
       if (char_form == 2)
         geometriaBox[i] = new THREE.BoxGeometry(X[i], Y[i], X[i]);
       if (char_form == 3)
@@ -507,10 +532,23 @@ function buttClick() {
   }
 
   if (char_type == 1) {
-    let pozx = -7;
+    let pozx = -2.5;
+    let pozz = -2.75;
     for (var i = 0; i < X.length; i++) {
-      Boxs[i].position.x = pozx;
-      pozx += 2;
+      if(char_form > 1)
+      Boxs[i].position.x = pozx + (X[i]/2);
+      else
+      Boxs[i].position.x = pozx + 1.5;
+      if(char_form == 3) {
+      Boxs[i].position.z = pozz + (Z[i]/2);
+      }
+      if(char_form == 2) {
+        Boxs[i].position.z = pozz + (X[i]/2);
+      }
+      if(char_form == 1) {
+        Boxs[i].position.z = pozz + 1.5;
+      }
+      pozx += 5;
       if (Y[i]) Boxs[i].position.y = -4 + Y[i] / 2;
       else Boxs[i].position.y = -4 + X[i] / 2;
     }

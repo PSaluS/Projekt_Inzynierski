@@ -5,9 +5,8 @@ function sizeupdate() {
   charh = charh - document.getElementById("menu").offsetHeight;
   charh = charh - document.getElementById("foot").innerHeight;
   document.getElementById("chart").style.height = `${charh}px`;
-  document.getElementById("data").style.height = `${charh}px`;
+  document.getElementById("data").style.maxHeight = `${charh}px`;
   var topm = document.getElementById('menu').offsetHeight + 6;
-  console.log(topm);
   document.getElementById("main").style.marginTop = `${topm}px`;
   var fw =
     document.getElementById("data").offsetWidth +
