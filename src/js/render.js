@@ -2,16 +2,34 @@ import * as THREE from 'three';
 import OrbitControls from 'three-orbitcontrols';
 import { CSS2DRenderer, CSS2DObject } from 'three/examples/jsm/renderers/CSS2DRenderer.js';
 
-var scena = new THREE.Scene();
-var kamera = new THREE.PerspectiveCamera(
+const xmlLoad = document.getElementById("xmlload");
+let char_type = 1;
+let char_color = 1;
+let char_form = 3;
+let dates = [];
+let geometriaBox = [];
+let BoxMaterial = [];
+let Boxs = [];
+let X = [];
+let Y = [];
+let Z = [];
+let dateX = [], dateY = [], dateZ =[];
+let trash;
+let mouse;
+let text;
+let label;
+let labelVisibility = [];
+
+const scena = new THREE.Scene();
+const kamera = new THREE.PerspectiveCamera(
   45,
   document.getElementById("chart").offsetWidth /
   document.getElementById("chart").offsetHeight,
   0.1,
   1000
 );
-var renderer = new THREE.WebGLRenderer();
-var labelRenderer = new CSS2DRenderer();
+const renderer = new THREE.WebGLRenderer();
+const labelRenderer = new CSS2DRenderer();
 
 function init() {
   kamera.position.z = 6.5;
@@ -31,23 +49,6 @@ function init() {
 
   mouse = new THREE.Vector2()
 }
-var xmlLoad = document.getElementById("xmlload");
-var char_type = 1;
-var char_color = 1;
-var char_form = 3;
-var dates = [];
-var geometriaBox = [];
-var BoxMaterial = [];
-var Boxs = [];
-var X = [];
-var Y = [];
-var Z = [];
-var dateX = [], dateY = [], dateZ =[];
-var trash;
-var mouse;
-var text;
-var label;
-var labelVisibility = [];
 
 menuActiv();
 
@@ -126,26 +127,26 @@ function charFromCHange() {
 };
 
 xmlLoad.onchange = function () {
-  var uploader = this;
-  var reader = new FileReader();
+  const uploader = this;
+  const reader = new FileReader();
   reader.readAsText(uploader.files[0], "UTF-8");
   reader.onprogress = function(evt) {};
   reader.onload = function(evt) {
-    var xml_data = stringToXML(reader.result);
+    let xml_data = stringToXML(reader.result);
 
     dl = ([] = xml_data.documentElement.childNodes).length;
     char_form = xml_data.documentElement.childNodes[0].children.length;
 
     charFromCHange();
 
-    for (var i = 0; i < dl; i++) {
+    for (let i = 0; i < dl; i++) {
       document.getElementById(`x${i}`).value =
         xml_data.documentElement.childNodes[
           i
         ].childNodes[0].firstChild.nodeValue;
     }
     if (char_form >= 2) {
-      for (var i = 0; i < dl; i++) {
+      for (let i = 0; i < dl; i++) {
         document.getElementById(`y${i}`).value =
           xml_data.documentElement.childNodes[
             i
@@ -153,7 +154,7 @@ xmlLoad.onchange = function () {
       }
     }
     if (char_form >= 3) {
-      for (var i = 0; i < dl; i++) {
+      for (let i = 0; i < dl; i++) {
         document.getElementById(`z${i}`).value =
           xml_data.documentElement.childNodes[
             i
@@ -305,14 +306,16 @@ function buttClick() {
     sciana.position.z -=  2.75;
 
     for (var i = 0; i < 11; i++) {
-      skala[i] = new THREE.Mesh(geometriaosi, materialosi);
+      if(i%10 == 0) skala[i] = new THREE.Mesh(geometriaosi, materialosi2);
+      else skala[i] = new THREE.Mesh(geometriaosi, materialosi);
       scena.add(skala[i]);
       skala[i].rotation.z = -Math.PI / 2;
       skala[i].position.z = -2.75;
       skala[i].position.y = i * 0.5 - 4;
       skala[i].position.x += -2.5 + (dl * 2.5);
 
-      skala2[i] = new THREE.Mesh(geometriaosi, materialosi);
+      if(i%10 == 0) skala2[i] = new THREE.Mesh(geometriaosi, materialosi2);
+      else skala2[i] = new THREE.Mesh(geometriaosi, materialosi);
       scena.add(skala2[i]);
       skala2[i].rotation.z = -Math.PI / 2;
       skala2[i].position.z = i * 0.5 - 2.75;
